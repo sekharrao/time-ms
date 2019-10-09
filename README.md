@@ -9,3 +9,8 @@
 This will start the application on port `9050`.
 
 
+## Access the application
+
+Open the web-browser and open the url `http://localhost:9050/time`
+
+and you should see the response like `{"time":"10:20:33"}`
