@@ -1,0 +1,21 @@
+package com.example.time.controller;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.time.model.CustomResponse;
+
+@RestController
+public class TimeController {
+
+	@GetMapping("/time")
+    public CustomResponse greeting() {
+         LocalTime time = LocalTime.now();
+		 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+		 return new CustomResponse(time.format(formatter));
+    }
+
+}
