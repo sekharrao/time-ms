@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 
 import com.example.time.exception.AuthException; 
 
@@ -31,7 +32,8 @@ public class AuthFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
        String auth = request.getHeader("Authorization");
-       if(validateAuthToken(auth)){
+       String method = request.getMethod();
+       if(validateAuthToken(method, auth)){
 
         //call next filter in the filter chain
         filterChain.doFilter(request, response);
@@ -41,8 +43,11 @@ public class AuthFilter implements Filter {
 		
 	}
 
-	private boolean validateAuthToken(String auth) {
-		return auth.equalsIgnoreCase(AUTH_SECRET);
+	private boolean validateAuthToken(String method, String auth) {
+		if (HttpMethod.GET.matches(method) ) {
+			return AUTH_SECRET.equalsIgnoreCase(auth);
+		}
+		return true;
 		
 	}
 
